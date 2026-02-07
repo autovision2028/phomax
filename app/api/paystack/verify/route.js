@@ -8,7 +8,11 @@ export async function GET(request) {
 
     if (!reference) {
       return NextResponse.json(
-        { error: 'Reference is required' },
+        {
+          success: false,
+          error: 'Reference is required',
+          message: 'No payment reference found in URL',
+        },
         { status: 400 }
       );
     }
@@ -19,7 +23,11 @@ export async function GET(request) {
   } catch (error) {
     console.error('Verification API error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      {
+        success: false,
+        error: 'Internal server error',
+        message: error?.message,
+      },
       { status: 500 }
     );
   }
