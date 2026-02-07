@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import LeadForm from "@/components/LeadForm";
+import PaystackButton from "@/components/PaystackButton";
 
 const features = [
   {
@@ -194,16 +194,10 @@ const products = [
 ];
 
 export default function Home() {
-  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
+  const [email, setEmail] = useState("customer@example.com");
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f8fbff] to-white text-[#0f2c54]">
-      {selectedProduct && (
-        <LeadForm
-          productName={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-        />
-      )}
       <div className="mx-auto flex max-w-6xl flex-col gap-20 px-6 pb-24 pt-10 sm:px-10 lg:px-12">
         <header className="flex items-center justify-between">
           <span className="text-xl font-semibold tracking-wide">Phomax</span>
@@ -236,10 +230,24 @@ export default function Home() {
             </p>
           </div>
 
+          <div className="mt-6 w-full max-w-md">
+            <label className="mb-2 block text-left text-sm font-medium text-[#0f2c54]">
+              Email for Payment
+            </label>
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              className="w-full rounded-xl border border-[#dfe8f5] bg-white px-4 py-3 text-sm text-[#0f2c54] shadow-sm outline-none focus:border-[#2ac488] focus:ring-2 focus:ring-[#2ac488]/20"
+              placeholder="customer@example.com"
+            />
+            <p className="mt-2 text-left text-xs text-[#6a7b97]">
+              This email will be sent to Paystack for the transaction.
+            </p>
+          </div>
+
           <section className="mt-24 flex w-full flex-col items-center gap-10">
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-[#7f8cab]">
-              Why Phomax?
-            </div>
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-[#7f8cab]">Why Phomax?</div>
             <div className="grid w-full gap-12 text-left sm:grid-cols-3">
               {features.map(({ title, description, Icon }) => (
                 <div key={title} className="flex flex-col items-center gap-4 text-center">
@@ -257,12 +265,8 @@ export default function Home() {
 
           <section id="products" className="mt-32 flex w-full flex-col items-center gap-10">
             <div className="text-center">
-              <h2 className="text-2xl font-semibold text-[#0f2c54]">
-                Choose Your Smart Glasses
-              </h2>
-              <p className="mt-2 text-sm text-[#5f6f8c]">
-                Clear vision. Smart features. Easy payment.
-              </p>
+              <h2 className="text-2xl font-semibold text-[#0f2c54]">Choose Your Smart Glasses</h2>
+              <p className="mt-2 text-sm text-[#5f6f8c]">Clear vision. Smart features. Easy payment.</p>
             </div>
             <div className="grid w-full gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
               {products.map((product) => (
@@ -271,11 +275,7 @@ export default function Home() {
                   className="flex h-full min-w-[260px] flex-col rounded-3xl border border-[#e4ecf5] bg-white text-left shadow-sm"
                 >
                   <div className="overflow-hidden rounded-t-3xl">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="h-52 w-full object-cover"
-                    />
+                    <img src={product.image} alt={product.name} className="h-52 w-full object-cover" />
                   </div>
                   <div className="flex flex-1 flex-col gap-4 px-5 pb-6 pt-5 text-[#1c2f52]">
                     <div>
@@ -283,12 +283,13 @@ export default function Home() {
                       <p className="mt-1 text-sm text-[#5c6b87]">{product.description}</p>
                     </div>
                     <div className="text-lg font-semibold text-[#0f2c54]">{product.price}</div>
-                    <button 
-                      onClick={() => setSelectedProduct(product.name)}
-                      className="rounded-full bg-[#2ac488] py-2 text-sm font-medium text-white transition hover:bg-[#24b179]"
-                    >
-                      Get Payment Options
-                    </button>
+                    <div className="flex justify-center">
+                      <PaystackButton
+                        email={email}
+                        amount={Number(String(product.price).replace(/[^0-9]/g, ""))}
+                        metadata={{ productName: product.name }}
+                      />
+                    </div>
                     <p className="text-center text-xs text-[#7a8aa8]">Prescription available</p>
                   </div>
                 </article>
@@ -299,9 +300,7 @@ export default function Home() {
           <section className="mt-24 w-screen -mx-6 bg-[#f4f8fc] px-6 py-16 text-center text-[#0f2c54] sm:-mx-10 sm:px-12 lg:-mx-12 lg:px-24">
             <div className="mx-auto mb-14 max-w-4xl">
               <h2 className="text-2xl font-semibold">Multiple Payment Options</h2>
-              <p className="mt-2 text-sm text-[#5f6f8c]">
-                Choose the payment method that works best for you
-              </p>
+              <p className="mt-2 text-sm text-[#5f6f8c]">Choose the payment method that works best for you</p>
             </div>
             <div className="mx-auto grid max-w-5xl gap-8 sm:grid-cols-2">
               {paymentOptions.map((option) => (
@@ -311,20 +310,8 @@ export default function Home() {
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#e4fbf3]">
-                      <svg
-                        viewBox="0 0 48 48"
-                        className="h-7 w-7 text-[#1ab27b]"
-                        aria-hidden
-                      >
-                        <rect
-                          x="8"
-                          y="15"
-                          width="32"
-                          height="18"
-                          rx="4"
-                          fill="currentColor"
-                          opacity="0.15"
-                        />
+                      <svg viewBox="0 0 48 48" className="h-7 w-7 text-[#1ab27b]" aria-hidden>
+                        <rect x="8" y="15" width="32" height="18" rx="4" fill="currentColor" opacity="0.15" />
                         <rect
                           x="11"
                           y="18"
@@ -336,20 +323,11 @@ export default function Home() {
                           fill="none"
                         />
                         <circle cx="19" cy="24" r="1.7" fill="currentColor" />
-                        <rect
-                          x="26"
-                          y="22.5"
-                          width="8"
-                          height="3"
-                          rx="1"
-                          fill="currentColor"
-                        />
+                        <rect x="26" y="22.5" width="8" height="3" rx="1" fill="currentColor" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-base font-semibold text-[#0f2c54]">
-                        {option.title}
-                      </p>
+                      <p className="text-base font-semibold text-[#0f2c54]">{option.title}</p>
                       <p className="text-sm text-[#5c6b87]">{option.description}</p>
                     </div>
                   </div>

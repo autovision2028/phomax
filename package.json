@@ -1,26 +1,31 @@
 {
-  "name": "phomax",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "next": "16.1.4",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.4",
-    "tailwindcss": "^4",
-    "typescript": "^5"
-  }
+    "name": "phomax",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "eslint",
+        "zoho-auth": "echo 'Open http://localhost:3000/auth/initiate to start Zoho auth'",
+        "test-lead": "curl -X POST http://localhost:3000/api/zoho/create-lead -H 'Content-Type: application/json' -d '{\\\"name\\\":\\\"Test Lead\\\",\\\"email\\\":\\\"test@example.com\\\",\\\"phone\\\":\\\"1234567890\\\"}'"
+    },
+    "dependencies": {
+        "@supabase/supabase-js": "^2.93.3",
+        "axios": "^1.13.4",
+        "next": "16.1.4",
+        "paystack": "^2.0.1",
+        "react": "19.2.3",
+        "react-dom": "19.2.3"
+    },
+    "devDependencies": {
+        "@tailwindcss/postcss": "^4",
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "eslint": "^9",
+        "eslint-config-next": "16.1.4",
+        "tailwindcss": "^4",
+        "typescript": "^5"
+    }
 }
