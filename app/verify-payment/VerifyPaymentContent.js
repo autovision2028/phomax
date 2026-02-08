@@ -1,13 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
-export default function VerifyPaymentContent() {
-  const searchParams = useSearchParams();
+export default function VerifyPaymentContent({ reference }) {
   const router = useRouter();
-  const reference = searchParams.get('reference');
   const [status, setStatus] = useState('verifying');
   const [data, setData] = useState(null);
 
