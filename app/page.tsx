@@ -124,14 +124,14 @@ const products = [
   {
     name: "Phomax Smart Vision",
     description: "Prescription smart glasses for work and daily screen use.",
-    price: "₦125,000",
+    price: "₦270,000",
     image:
       "https://images.unsplash.com/photo-1485163819542-13adeb5e0068?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Phomax Smart Drive",
     description: "Prescription smart glasses for drivers and road safety.",
-    price: "₦135,000",
+    price: "₦590,000",
     image:
       "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80",
   },
